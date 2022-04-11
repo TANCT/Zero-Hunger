@@ -1,0 +1,85 @@
+@page
+@model ZeroHunger.Pages.profileModel
+@{
+   
+    @if (User.Identity.IsAuthenticated)
+    {
+         var photopath = "~/profileImg/default.jpg";
+    @if (Model.loginUser.ProfileImage != null)
+    {
+        photopath = "~/profileImg/" + Model.loginUser.ProfileImage;
+    }
+        <head>
+            <title>Profile</title>
+
+            <link rel="stylesheet" href="~/css/profile.css" />
+        </head>
+        <body>
+            <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+            <div class="container">
+                <div class="row">
+                    <div class="profile-nav col-md-3">
+                        <div class="panel">
+                            <div class="user-heading round">
+                                <a href="#">
+                                    <img class="imageThumbnail"  src="@photopath" asp-append-version="true"/>
+                                </a>
+                            </div>
+
+                            <ul class="nav nav-pills nav-stacked">
+                                <!--li class="active"><a href="#"> <i class="fa fa-user"></i> Profile</a></li-->
+
+              <li><a asp-page="editProfile"> <i class="fas fa-edit"></i> Edit profile</a></li>
+              <li><a href="ResetPassword?n=@Model.n&p=@Model.p&a=@Model.a"> Change Password </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="profile-info col-md-9">
+                        <div class="panel">
+                            <div class="bio-graph-heading">
+                                <h1 style="text-align:center;">Profile</h1>
+                            </div>
+                            <div class="panel-body bio-graph-info">
+                                <div class="row">
+                                    <div class="bio-row">
+                                        <p><span>Name </span>: @Model.name</p>
+                                    </div>
+                                    <div class="bio-row">
+                                        <p><span>Birthday</span>: @Model.birth</p>
+                                    </div>
+                                    <div class="bio-row">
+                                        <p><span>Email </span>: @Model.email</p>
+                                    </div>
+                                    <div class="bio-row">
+                                        <p><span>Phone </span>: @Model.phone</p>
+                                    </div>
+                                    <div class="bio-row">
+                                        <p><span>Address 1 </span>: @Model.address1</p>
+                                    </div>
+                                    <div class="bio-row">
+                                        <p><span>Address 2 </span>: @Model.address2</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+<form method="post" id="updateForm" asp-page-handler="Update">
+        <input type="hidden" name="handler" value="Update" />
+        <input type="hidden" id="userLat" name="userLat" value="@Model.u.latitude" />
+        <input type="hidden" id="userLon" name="userLon" value="@Model.u.longitute" />
+        <button class="btn btn-info" style="background-color:#ff8080;" onclick="navigator.geolocation.getCurrentPosition(fillLatLon, error, options); return false;">Update Location</button>
+
+    </form>
+    </div>
+                </div>
+            </div>
+        </body>
+    }else
+        {
+            <script>
+     alert("Sorry, you are not eligible to enter this page.");
+     location.href = '/Index';
+     </script>
+        }
+        
+    }

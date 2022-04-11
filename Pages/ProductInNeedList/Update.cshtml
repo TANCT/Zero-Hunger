@@ -1,0 +1,134 @@
+@page
+@model ZeroHunger.Pages.ProductInNeedList.UpdateModel
+
+@{
+    ViewData["Title"] = "Update";
+    
+       
+    
+
+@if (@HttpContext.Request.Cookies["role"] != null && @HttpContext.Request.Cookies["role"].Equals("4")&&@Model.product!=null)
+{
+    
+     var photopath="../images/"+Model.product.image;
+   
+<head>
+    <link type="text/css" href="~/css~/css/style-layout.css" />
+</head>
+
+<br />
+<h2 style="color:black;">Edit New Product</h2>
+<br />
+<div class="border container" style="padding:30px">
+    <form method="Post" class="form-v10-content" enctype="multipart/form-data">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="product.product_id">Product ID</label>
+            </div>
+            <div class="col-6">
+                <input asp-for="product.product_id"  class="form-control" readonly />
+            </div>
+
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="product.product_name">Product Name</label>
+            </div>
+            <div class="col-6">
+                <input asp-for="product.product_name" class="form-control" required />
+            </div>
+            <span asp-validation-for="product.product_name" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="product.product_description">Product Description</label>
+            </div>
+            <div class="col-6">
+                <input asp-for="product.product_description" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-4">
+                <label asp-for="product.amount">Amount</label>
+            </div>
+            <div class="col-6">
+                <input asp-for="product.amount" class="form-control" min="1" required />
+            </div>
+            <span asp-validation-for="product.amount" class="text-danger"></span>
+        </div>
+        
+        
+        <input asp-for="product.image" type="hidden"/>
+        <div class="form-group row">
+            <div class="col-4">
+                <label>New Image</label>
+            </div>
+            <div class="col-6">
+                <input asp-for="ImageFile" class="custom-file-input" accept="image/*" id="image_input" >
+                <label class="custom-file-label" id="imgupload">Upload New Image (Optional)</label>
+            </div>
+            <span asp-validation-for="ImageFile" class="text-danger"></span>
+        </div>
+        
+        <div class="form-group row">
+            <div class="col-4">
+                <label>Image In Database</label>
+            </div>
+            <div class="col-6" id="display_image" style="background-image: url(@photopath);  background-size: contain; width: auto; height: 300px;border: 1px solid black;  background-position: center; background-repeat:no-repeat;">
+                <!--<img id="imageThumbnail" class="imageThumbnail"  src="@photopath" asp-append-version="true"/>-->
+            </div>
+            
+        </div>
+
+        <div class="form-group row">
+            <div class="col-3 offset-4">
+                <input type="submit" value="Update" class="btn btn-primary form-control" />
+            </div>
+            <div class="col-3">
+                <a asp-page="Index" class="btn btn-secondary form-control">
+                    Back to List
+                </a>
+            </div>
+        </div>
+
+
+        
+    </form>
+</div>
+<div></div>
+<script>
+    const image_input = document.querySelector("#image_input");
+    image_input.addEventListener("change", function() {
+    
+       const reader = new FileReader();
+       reader.addEventListener("load", () => {
+       const uploaded_image = reader.result;
+       document.querySelector("#display_image").style.backgroundImage = `url(${uploaded_image})`;
+    });
+       reader.readAsDataURL(this.files[0]);
+       var image=document.getElementById("image_input");
+       document.getElementById("imgupload").innerHTML=image.value.split("\\").pop();
+    });
+
+
+    
+
+</script>
+
+@section Scripts{
+    <partial-name ="_ValidationScriptsPartial" />
+       
+   
+    
+}
+}
+else
+{
+    <script>
+     alert("Sorry, you are not eligible to enter this page.");
+     location.href = '/Index';
+     </script>
+
+}
+}

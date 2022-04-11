@@ -1,0 +1,82 @@
+@page
+@model ZeroHunger.Pages.UserTypeModel
+
+
+<head> <title>Choose your role</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	
+	
+
+	<style>
+		.btnyo{
+			display:block;
+			width:200px;
+			
+		}
+		.cen{
+			align-items:center;
+		}
+		.align-items-center{
+			display:flex;
+			flex-direction:column;
+			justify-content:center;
+		}
+	</style>
+
+	<script type='text/javascript'>
+    function NavigateToPage(page){
+        window.location.href = page;
+    }
+	</script>
+
+	</head>
+
+
+	<body>
+	@*<section class="">*@
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class=" text-center mb-2 col-lg-5">
+				<br>
+					<h2 class="heading-section"><b>Choose your role</b></h2>
+				</div>
+			</div>
+			<div class="row justify-content-center align-items-center">
+				<div class="col-md-6 col-lg-5">
+					<div class="login-wrap p-4 p-md-5">
+		      	<div class="icon d-flex align-items-center justify-content-center">
+		      		<span class="fa fa-user-o"></span>
+					  
+		      	</div>
+				    
+				  <div class="col align-items-center justify-content-center cen">
+				  <br>
+					<button  type="submit" class="btn btnyo btn-primary rounded submit btnlen" style="padding:15px" onclick='NavigateToPage("Register/RegisterReceiver")'>Receiver</button>
+					<br>
+					<button type="submit" class="btn btnyo btn-primary rounded submit btnlen" style="padding:15px" onclick='NavigateToPage("RegisterDonor")'>Donor</button>
+					<br>
+					<button type="submit" class="btn btnyo btn-primary rounded submit btnlen" style="padding:15px" onclick='NavigateToPage("RegisterVolunteer")'>Volunteer</button>
+					<br>
+				</div>
+	            	
+	        </div>
+				</div>
+				
+			</div>
+		</div>
+@*	</section>*@
+
+	<br /><br /><br />
+
+</body>
+
+<script src="js/jquery.min.js"></script>
+  <script src="js/popper.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/main.js"></script>

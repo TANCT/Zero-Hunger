@@ -1,0 +1,255 @@
+@page
+@model ZeroHunger.Pages.UserPage.CreateUserModel
+@{
+@if (@HttpContext.Request.Cookies["role"] != null && @HttpContext.Request.Cookies["role"].Equals("4"))
+    {
+<div class="page-content">
+    <form method="post" class="form-v10-content">
+        <h2 class="text-info" style="text-align:center;margin:0px 10px 30px 10px;">Add User</h2>
+        <h5 style="color:red;">@Model.message</h5>
+        <div>
+            <div class="form-group row">
+				<div class="col-4">
+                   <label asp-for="user.UserType">User Type</label>
+                </div>
+                <div class="col-6">
+<input min='1' max='4' asp-for="user.UserType"  id="usertype" class="input-text" placeholder="Usertype" required>                </div>
+                
+                <div class="col-4">
+                   <label asp-for="user.UserName">Username</label>
+                </div>
+                <div class="col-6">
+					<input asp-for="user.UserName" class="input-text" placeholder="Username" required>
+                </div>
+                <div class="col-4">
+					<label asp-for="user.UserPwd">Password</label>
+					
+                </div>
+                <div class="col-6">
+					<input asp-for="user.UserPwd"  id="password" class="input-text" placeholder="Password" required>
+                </div>
+                <div class="col-4">
+					<label asp-for="user.UserBirth">BirthDate</label>
+							
+                </div>
+                <div class="col-6">
+                   <input asp-for="user.UserBirth"  required>
+                </div>
+				<div class="col-4">
+					<label asp-for="user.UserEmail">Email</label>
+							
+                </div>
+                <div class="col-6">
+					<input asp-for="user.UserEmail" class="email" id="email" placeholder="Email" required>
+                </div>
+				<div class="col-4">
+					<label asp-for="user.UserAdrs1">Address 1</label>
+							
+                </div>
+                <div class="col-6">
+					<input asp-for="user.UserAdrs1"  class="street" id="add1" placeholder="Address 1" required>
+                </div><div class="col-4">
+					<label asp-for="user.UserAdrs2"> Address 2</label>
+							
+                </div>
+                <div class="col-6">
+					<input asp-for="user.UserAdrs2" class="street" id="add2" placeholder="Address 2" required>
+                </div>
+				<div class="col-4">
+					<label asp-for="user.UserPhone">Phone Number</label>
+							
+                </div>
+                <div class="col-6">
+					<input asp-for="user.UserPhone" class="phone" id="phone" placeholder="Phone Number" required>
+                </div>
+
+				
+            </div>
+            <div class="form-group row">
+                <div class="col-5 offset-4">
+                    <input type="submit" value="Create" class="btn btn-primary form-control" />
+
+
+                </div>
+                <div class="col-5 offset-4">
+                    <a asp-page="UserView" class="btn btn-sucess form-control">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div></div>
+}else{
+<script>
+     alert("Sorry, you are not eligible to enter this page.");
+     location.href = '/Index';
+     </script>
+}}
+
+
+@*<!--
+<head>
+	<meta charset="utf-8">
+	<title>Form-v10 by Colorlib</title>
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+	<link rel="stylesheet" type="text/css" href="css/montserrat-font.css">
+	<link rel="stylesheet" type="text/css" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+	<!-- Main Style Css -->
+    <link rel="stylesheet" href="../css/style2.css"/>
+</head>
+<body class="form-v10">
+	
+	<div class="page-content" style="display:block; padding:50px;">
+		<div style="width:100%; text-align: center;"><h1>Create User Account</h1></div>
+		<div class="form-v10-content" style="margin:20px auto 20px auto;">
+			<form class="form-detail" method="post" id="myform">
+				<div class="form-left">
+					<h2>General Infomation</h2>
+					<div class="form-row">
+						<label asp-for="user.UserType"></label>
+						<select name="title" asp-for="user.UserType">
+						    <option class="option" value="1">Donor</option>
+						    <option class="option" value="3">Donor</option>
+							<option class="option" value="2">Volunteer</option>
+						    <option class="option" value="4">Admin</option>
+						</select>
+						<span class="select-btn">
+						  	<i class="zmdi zmdi-chevron-down"></i>
+						</span>
+					</div>
+					<div class="form-group">
+						<div class="form-row form-row-2">
+							<label asp-for="user.UserName"></label>
+							<input asp-for="user.UserName" type="text" name="username" id="username" class="input-text" placeholder="Username" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="form-row form-row-2">
+							<label asp-for="user.UserPwd"></label>
+							<input asp-for="user.UserPwd" type="text" name="password" id="password" class="input-text" placeholder="Password" required>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="form-row form-row-2">
+							<label asp-for="user.UserBirth"></label>
+							<input asp-for="user.UserBirth" type="date" name="birth"  placeholder="BirthDate" required>
+						</div>
+					</div>
+					<div class="form-group">
+
+						<div class="form-row form-row-1">
+							
+							<input type="text" name="first_name" id="first_name" class="input-text" placeholder="First Name" required>
+						</div>
+						<div class="form-row form-row-2">
+							<input type="text" name="last_name" id="last_name" class="input-text" placeholder="Last Name" required>
+						</div>
+					</div>
+					<div class="form-row">
+						<label asp-for="user.UserEmail"></label>
+						<input asp-for="user.UserEmail" type="text" name="email" class="email" id="email" placeholder="Email" required>
+					</div> 
+					<div class="form-row">
+						<input type="text" name="business" class="" id="business" placeholder="Business Name">
+					</div> 
+					<!--  <div class="form-row">
+						<select name="position">
+						    <option value="position">Position</option>
+						    <option value="director">Director</option>
+						    <option value="manager">Manager</option>
+						    <option value="employee">Employee</option>
+						<select> 
+						<span class="select-btn">
+						  	<i class="zmdi zmdi-chevron-down"></i>
+						</span>
+					</div>
+					<div class="form-row">
+						<input type="text" name="email" class="company" id="email" placeholder="Email" required>
+					</div> 
+					<div class="form-group">
+						<div class="form-row form-row-3">
+							<input type="text" name="business" class="business" id="business" placeholder="Business Arena" required>
+						</div>
+						<div class="form-row form-row-4">
+							<select name="employees">
+							    <option value="employees">Employees</option>
+							    <option value="trainee">Trainee</option>
+							    <option value="colleague">Colleague</option>
+							    <option value="associate">Associate</option>
+							</select>
+							<span class="select-btn">
+							  	<i class="zmdi zmdi-chevron-down"></i>
+							</span>
+						</div>
+					</div>-->
+				</div>
+
+				<div class="form-right">
+					<h2>Contact Details</h2>
+					<div class="form-row">
+						<label asp-for="user.UserAdrs1"></label>
+						<input asp-for="user.UserAdrs1" type="text" name="add1" class="street" id="add1" placeholder="Address 1" required>
+					</div>
+					<div class="form-row">
+						<label asp-for="user.UserAdrs2"></label>
+						<input asp-for="user.UserAdrs2" type="text" name="add2" class="additional" id="add2" placeholder="Address 2" required>
+					</div>
+					<div class="form-group">
+						<div class="form-row form-row-1">
+							<input type="text" name="zip" class="zip" id="zip" placeholder="Zip Code">
+						</div>
+						<div class="form-row form-row-2">
+						<input type="text" name="city" class="zip" id="zip" placeholder="City">
+							<!--<select name="district">
+							    <option value="place">Place</option>
+							    <option value="Street">Street</option>
+							    <option value="District">District</option>
+							    <option value="City">City</option>
+							</select>
+							<span class="select-btn">
+							  	<i class="zmdi zmdi-chevron-down"></i>
+							</span>-->
+						</div>
+					</div>
+					<div class="form-row">
+						<select name="state">
+							<option value="state" disabled selected>State</option>
+						    <option value="Johor">Johor</option>
+							<option value="others">Others</option>
+						</select>
+						<span class="select-btn">
+						  	<i class="zmdi zmdi-chevron-down"></i>
+						</span>
+					</div>
+					<div class="form-group">
+						<div class="form-row form-row-1">
+							<input type="text" name="code" class="code" id="code" placeholder="Code +">
+						</div>
+						<div class="form-row form-row-2">
+							<label asp-for="user.UserPhone"></label>
+							<input asp-for="user.UserPhone" type="text" name="phone" class="phone" id="phone" placeholder="Phone Number" required>
+						</div>
+					</div>
+					<div class="form-row">
+						<input type="text" name="your_email" id="your_email" class="input-text"  placeholder="Your Email">
+					</div>
+					<div class="form-checkbox">
+						<label class="container"><p>I do accept the <a href="#" class="text">Terms and Conditions</a> of your site.</p>
+						  	<input type="checkbox" name="checkbox">
+						  	<span class="checkmark"></span>
+						</label>
+					</div>
+					<div class="form-row-last ">
+						<input type="submit" name="" class="" value="Create">
+					</div>
+					<div class="form-row-last ">
+						<a asp-page="UserView" class="register">Back To List</a>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+</body>*@

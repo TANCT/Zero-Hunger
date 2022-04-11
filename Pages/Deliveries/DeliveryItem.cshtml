@@ -1,0 +1,111 @@
+@page
+@model ZeroHunger.Pages.Deliveries.DeliveryItemModel
+
+@if (@HttpContext.Request.Cookies["role"] != null && @HttpContext.Request.Cookies["role"].Equals("4"))
+{
+        <div class="container p=3">
+            <div class="row pt-4">
+                <div class="col-8">
+                    <h2>Delivery Item</h2>
+                </div>
+                <div class="col-4 mt-2 text-right">
+                    <a asp-page="AddDeliveryItem" asp-route-id="@Model.DeliveryId" class="btn btn-info">
+                        <i class="bi bi-pencil-square"></i> &nbsp; Add New Delivery Item
+                    </a>
+                </div>
+            </div>  
+        </div>
+        <br/><br/>
+        @if (Model.DeliveryItems.Count()>0){
+            <table class="table table-bordered table-striped" style="text-align:center">
+                <thead>
+                    <tr>
+                        <th>
+                            Delivery Item Name
+                        </th>
+                        <th>
+                            Quantity
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var obj in Model.DeliveryItems)
+                    {
+                        <tr>
+                            @foreach (var dryfood in Model.DryFoods)
+                            {
+                                if (@dryfood.Id == @obj.DryFoodID)
+                                {
+                                    Model.ItemFound = true;
+                                    var dryfoodname = @dryfood.DryFoodName;
+                                    <td>@dryfoodname</td>
+                                    <td>@obj.Quantity</td>
+                                    <td>
+                                        <form method="post">
+                                            <input value="@obj.ItemID" name="itemid" type="hidden"/>
+                                            <!--<input value="obj.DeliveryID" name="delid" type="hidden"/> ?itemid=obj.ItemID&delid=obj.DeliveryID"-->
+                                            <a asp-page="EditDeliveryItem" asp-route-itemid="@obj.ItemID" class="btn btn-success mx-2" style="width:100px">
+                                                Edit &nbsp;<i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <br/><br/>
+                                            <button type="submit" asp-page="DeliveryItem" class="btn btn-danger mx-2" style="width:100px">
+                                                Delete &nbsp;<i class="bi bi-trash-fill"></i>
+                                            </button>       
+                                        </form>
+                                    </td>
+                                    break;
+                                }
+                            }
+                        </tr>
+                    }
+                    @if(Model.ItemFound==false)
+                    {
+                        <tr>
+                            <td colspan="3">No Delivery Item Found</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }else if(Model.DeliveryItems.Count()==0)
+        {
+            <table class="table table-bordered table-striped" style="text-align:center">
+                <thead>
+                    <tr>
+                        <th>
+                            Delivery Item Name
+                        </th>
+                        <th>
+                            Quantity
+                        </th>
+                        <th>
+                            Action
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3">No Delivery Item Found</td>
+                    </tr>
+                </tbody>
+            </table>
+        }
+        <br/>
+        <div class="col-12 mt-4 text-center">
+            <a asp-page="Index" align="center" class="btn btn-secondary" style="width:150px;">Back to List</a>
+        </div>
+
+    @section Scripts{
+        <script src="~/js/DeliveryItem.js"></script>
+        @{
+            <partial name="_ValidationScriptsPartial"></partial>
+        }
+    }
+}else{
+     <script>
+     alert("Sorry, you are not eligible to enter this page.");
+     location.href = '/Index';
+     </script>
+}

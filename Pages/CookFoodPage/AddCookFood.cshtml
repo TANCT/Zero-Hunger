@@ -1,0 +1,247 @@
+@page
+@model ZeroHunger.Pages.CookFoodPage.AddCookFoodModel
+@{
+@if (@HttpContext.Request.Cookies["role"] != null && @HttpContext.Request.Cookies["role"].Equals("3"))
+{
+    <head>
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script>
+</script>
+    </head>
+    <br />
+<h2 style="color:black">Donate Cook Food</h2>
+<br />
+
+<ul id="error" style="color: red;">
+
+</ul>
+<div class="border container" style="padding:30px">
+
+    <form method="post" class="form-v10-content" id="addForm" enctype="multipart/form-data">
+       
+        <div class="form-group row">
+                 <div class="col-4" style="">
+                   <label asp-for="cook.ShopName">Shop Name</label>
+                </div>
+                <div class="col-6" >
+					<input asp-for="cook.ShopName" id="shop" class="form-control" placeholder="Restaurant ABC">
+                </div>
+               </div>
+               <div class="form-group row">
+                <div class="col-4" style="">
+                   <label asp-for="cook.CookName">Food Name</label>
+                </div>
+                <div class="col-6" >
+					<input asp-for="cook.CookName" id="food" class="form-control" placeholder="Porridge">
+                </div>
+                </div>
+                <div class="form-group row">
+                <div class="col-4" style="">
+					<label asp-for="cook.CookQuantity">Quantity</label>
+					
+                </div>
+                <div class="col-6">
+					<input asp-for="cook.CookQuantity" id="quantity" placeholder="Minimum 5" class="form-control" min='5'>
+                </div>
+                </div>
+                <div class="form-group row">
+                <div class="col-4" style="">
+					<label asp-for="cook.OpenDate">Opening Time</label>
+					
+                </div>
+                <div class="col-6">
+					<input asp-for="cook.OpenDate" type="datetime-local" class="form-control" id="open">
+                </div>
+                </div>
+                <div class="form-group row">
+                <div class="col-4" style="">
+					<label asp-for="cook.CloseDate">Closing Time</label>
+					
+                </div>
+                <div class="col-6">
+					<input asp-for="cook.CloseDate" class="form-control" id="close" >
+                </div>
+                </div>
+                 <div class="form-group row">
+                <div class="col-4" style="">
+					<label asp-for="cook.CookLatitude">Latitude of your location</label>
+							
+                </div>
+                <div class="col-6">
+                   <input asp-for="cook.CookLatitude"  id="la" placeholder="Latitude" class="form-control" readonly required>
+                </div>
+                </div>
+                <div class="form-group row">
+				<div class="col-4" style="">
+					<label asp-for="cook.CookLongtitude">Longtitude of your location</label>
+							
+                </div>
+                <div class="col-6">
+					<input asp-for="cook.CookLongtitude" id="long" placeholder="Longtitude" class="form-control" readonly required>
+                    <br>
+                    <input type="button" class="btn btn-primary" onclick="navigator.geolocation.getCurrentPosition(getLatLon, error, options);" value="Get Current Location" />
+                </div>
+                </div>
+                @*<div class="col-4">
+					<label asp-for="cook.donor.DonorId"></label>
+							
+                </div>
+                <div class="col-6">
+					<input asp-for="cook.donor.DonorId" placeholder="Donor ID" required>
+                </div>*@
+                
+				<div id="map" style="width:800px;height:500px;margin:20px auto 20px auto">
+    
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key="></script>    
+    <script>
+        //let map, infoWindow;
+        function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: -34.397, lng: 150.644 },
+        zoom: 6,
+    });
+    infoWindow = new google.maps.InfoWindow();
+    
+}
+
+var options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+};
+function error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+ function getLatLon(position){
+
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            document.getElementById("la").value=latitude;
+            document.getElementById("long").value=longitude;
+ map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: -34.397, lng: 150.644 },
+        zoom: 6,
+        mapId: 'ca3e1b773e1fd477',
+    });
+ infoWindow = new google.maps.InfoWindow();
+
+if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    };
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent("Location found.");
+                    infoWindow.open(map);
+                    map.setCenter(pos);
+                },
+                () => {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                }
+            );
+        }
+        }
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(
+                browserHasGeolocation
+                    ? "Error: The Geolocation service failed."
+                    : "Error: Your browser doesn't support geolocation."
+            );
+            infoWindow.open(map);
+        }
+		navigator.geolocation.getCurrentPosition(getLatLon);
+       
+    </script>
+</div>
+            <div class="form-group row">
+                <div class="col-5 offset-4">
+                    <input type="submit" value="Create" class="btn btn-primary form-control" />
+
+
+                </div>
+                <br /><br />
+                <div class="col-5 offset-4">
+                    <a asp-page="CookFoodView" class="btn btn-sucess form-control">Back to List</a>
+                </div>
+                
+             </div>
+       </form>
+       
+
+        
+<script>
+$("#addForm").submit(
+function(event){
+    if(document.getElementById("shop").value=="" || document.getElementById("food").value=="" || document.getElementById("quantity").value==0 || document.getElementById("open").value=="" || document.getElementById("close").value==""){
+    var ul =document.getElementById("error");
+    while(ul.hasChildNodes()){
+        ul.removeChild(ul.firstChild);
+    }
+    
+
+        if(document.getElementById("shop").value==""){
+        var ul = document.getElementById("error");
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode("Please enter the shop name."));
+        ul.appendChild(li);
+    }
+    if(document.getElementById("food").value==""){
+        var ul = document.getElementById("error");
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode("Please enter the food name."));
+        ul.appendChild(li);
+    }
+    if(document.getElementById("quantity").value==0){
+        var ul = document.getElementById("error");
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode("Donation quantity should be at least 5."));
+        ul.appendChild(li);
+    }
+    var todaysDate = new Date();
+
+    var month;
+    if((todaysDate.getMonth()+1)<10){
+        month="0"+(todaysDate.getMonth()+1);
+    }else{
+        month=(todaysDate.getMonth()+1);
+    }
+    var datetime = todaysDate.getFullYear() + "-" + month + "-" + todaysDate.getDate() + "T" + todaysDate.getHours() + ":" + todaysDate.getMinutes();
+    
+    if(document.getElementById("open").value==""){
+        var ul = document.getElementById("error");
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode("Please give an opening time."));
+        ul.appendChild(li);
+    }
+    if(document.getElementById("close").value==""){
+        var ul = document.getElementById("error");
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode("Please give a closing time."));
+        ul.appendChild(li);
+    }
+    if(document.getElementById("close").value!="" || document.getElementById("open").value!=""){
+    if(document.getElementById("open").value<=datetime || document.getElementById("close").value<=datetime){
+        var ul = document.getElementById("error");
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode("Opening Time or Closing Time had already passed."));
+        ul.appendChild(li);
+    }
+    }
+    event.preventDefault();    
+    }
+else{
+        
+    }
+});
+</script>
+</div>
+<br /><br /><br />
+}else{
+     <script>
+     alert("Sorry, you are not eligible to enter this page.");
+     location.href = '/Index';
+     </script>
+}}

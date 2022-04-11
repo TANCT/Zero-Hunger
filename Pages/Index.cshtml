@@ -1,0 +1,134 @@
+@page
+@using ZeroHunger.Pages
+@model IndexModel
+@{
+    <head>
+	<meta charset="utf-8">
+	<title>Form-v10 by Colorlib</title>
+	<!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|Nunito:600,700" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <!-- CSS Libraries -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Template Stylesheet -->
+    <link href="~/css/style-home.css" rel="stylesheet" asp-append-version="true">
+    
+</head>
+<body>
+<!-- Carousel Start -->
+    <div class="carousel">
+        <div class="container-fluid">
+            <div class="owl-carousel">
+                <div class="carousel-item">
+                    <div class="carousel-img">
+                        <img src="images/carousel-1.jpg" alt="Image">
+                    </div>
+                    <div class="carousel-text">
+                         @if(Request.Cookies["role"] == null)
+                            {
+                                <h1>HOL 448 <span> Food Bank!</span></h1>
+                            }else if(Request.Cookies["role"] != null && Request.Cookies["role"].Equals("1"))
+                            {
+                                <h1>Welcome, <span> User!</span></h1>
+                            }else if(Request.Cookies["role"] != null && Request.Cookies["role"].Equals("2"))
+                            {
+                                <h1>Welcome, <span> Volunteer!</span></h1>
+                            }else if(Request.Cookies["role"] != null && Request.Cookies["role"].Equals("3"))
+                            {
+                                <h1>Welcome, <span> Donor!</span></h1>
+                            }else if(Request.Cookies["role"] != null && Request.Cookies["role"].Equals("4"))
+                            {
+                                <h1>Welcome, <span> Admin!</span></h1>
+                            }
+                        <p>
+                            Join us today. Share food to the poor needy families. <br>Together, We Love & Care.
+                        </p>
+                        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <!-- Carousel End -->
+    <!-- Food Start -->
+        <div class="food" id="aboutus">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-4">
+                        <div class="food-item">
+                            
+                            <img src="images/strategic-vision.png">
+                            <h2>Our Vision</h2>
+                            <p>
+                                To dedicate 4 hours to change the society, together we share and care.
+                            </p>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="food-item">
+                            <img src="~/images/red-flag.png">
+                            
+                            <h2>Our Slogan</h2>
+                            <p>
+                                With passionate conviction and hard work to help the needy and change the society, we believe that the greatest blessing is through loving others as ourselves.
+                            </p>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="food-item">
+                            <img src="~/images/people.png">
+                            <h2>Our Action</h2>
+                            <p>
+                                HOL 448 movements: To commit FOUR (4) hours per month in volunteer service for 48 hours per year in total.
+                            </p>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Food End -->
+        <!-- Product In Need Start -->
+        <div class="team">
+            <div class="container">
+                <div class="section-header text-center">
+                    <p>For Donation</p>
+                    <h2>Product In Need</h2>
+                </div>
+                <div class="row">
+                @if (Model.products.Count() > 0)
+            {
+                    @foreach (var item in Model.products)
+                    {
+                         <div class="col-lg-3 col-md-6">
+                        <div class="team-item">
+                            <div class="team-img">
+                                <img class="imageThumbnail" src="@Url.Content("~/images/"+item.image)"  alt="Image">
+                                
+                            </div>
+                            <div class="team-text">
+                                <h2>@Html.DisplayFor(m => item.product_name)</h2>
+                                        @if (item.product_description != null)
+                                        {
+                                            <p>@Html.DisplayFor(m => item.product_description)</p>
+                                        }else{<br />}
+
+                                <p>@Html.DisplayFor(m => item.amount) unit(s)</p>
+                            </div>
+                        </div>
+                    </div>   
+                    }
+
+             }
+                   
+                </div>
+            </div>
+        </div>
+        <!-- Team End -->
+
+    </body>
+}

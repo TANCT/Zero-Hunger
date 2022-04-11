@@ -1,0 +1,83 @@
+@page
+@model ZeroHunger.Pages.UserPage.EditUserModel
+@{
+@if (@HttpContext.Request.Cookies["role"] != null && @HttpContext.Request.Cookies["role"].Equals("4"))
+    {
+<div class="page-content">
+    <form method="post" class="form-v10-content">
+        <input asp-for="user.UserID" class="'form-control'" type='hidden'>
+        <h2 class="text-info" style="text-align:center;margin:0px 10px 30px 10px;">Edit User</h2>
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div>
+            <div class="form-group row">
+
+
+
+                <div class="col-4">
+                   <label asp-for="user.UserName"></label>
+                </div>
+                <div class="col-6">
+					<input asp-for="user.UserName" class="input-text" placeholder="Username" required>
+                </div> 
+                <div class="col-4">
+					<label asp-for="user.UserPwd"></label>
+					
+                </div>
+                <div class="col-6">
+					<input asp-for="user.UserPwd"  id="password" class="input-text" placeholder="Password" required>
+                </div>
+                <div class="col-4">
+					<label asp-for="user.UserBirth"></label>
+							
+                </div>
+                <div class="col-6">
+                   <input asp-for="user.UserBirth"   placeholder="BirthDate" required>
+                </div>
+				<div class="col-4">
+					<label asp-for="user.UserEmail"></label>
+							
+                </div>
+                <div class="col-6">
+					<input asp-for="user.UserEmail" class="email" id="email" placeholder="Email" required>
+                </div>
+				<div class="col-4">
+					<label asp-for="user.UserAdrs1"></label>
+							
+                </div>
+                <div class="col-6">
+					<input asp-for="user.UserAdrs1"  class="street" id="add1" placeholder="Address 1" required>
+                </div><div class="col-4">
+					<label asp-for="user.UserAdrs2"></label>
+							
+                </div>
+                <div class="col-6">
+					<input asp-for="user.UserAdrs2" class="street" id="add2" placeholder="Address 2" required>
+                </div>
+				<div class="col-4">
+					<label asp-for="user.UserPhone"></label>
+							
+                </div>
+                <div class="col-6">
+					<input asp-for="user.UserPhone" class="phone" id="phone" placeholder="Phone Number" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-5 offset-4">
+                    <input type="submit" value="Save" class="btn btn-primary form-control" />
+
+
+                </div>
+                <div class="col-5 offset-4">
+                    <a asp-page="UserView" class="btn btn-sucess form-control">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div></div>
+}else{
+<script>
+     alert("Sorry, you are not eligible to enter this page.");
+     location.href = '/Index';
+     </script>
+}}

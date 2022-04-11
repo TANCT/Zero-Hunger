@@ -1,0 +1,155 @@
+@page
+@model ZeroHunger.Pages.RegisterDonorModel
+@{
+
+	
+<head>
+	<meta charset="utf-8">
+	<title>Form-v10 by Colorlib</title>
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+	<link rel="stylesheet" type="text/css" href="css/montserrat-font.css">
+	<link rel="stylesheet" type="text/css" href="fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+	<!-- Main Style Css -->
+    <link rel="stylesheet" href="css/style2.css"/>
+	<style>
+	.pwd{
+	position: relative;
+}
+.p-viewer {
+	z-index: 9999;
+	position: absolute;
+	top: 20%;
+	right: 50px;
+}
+
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script>
+
+		function submit()
+		{
+			alert("Congratulations, you are now a registered donor.");
+		}
+	</script>
+</head>
+<body class="form-v10">
+	
+	<div class="page-content" style="display:block; padding:50px;">
+		<div style="width:100%; text-align: center;"><h1>Donor Registration</h1></div>
+		<ul id="error" style="color: red;">
+		</ul>
+		<div class="form-v10-content" style="width:90%;margin:20px auto 20px auto;">
+		
+			<form class="form-detail" method="post" id="myform">
+				<div class="form-left">
+					<h2>General Infomation</h2>
+					<div class="form-row" >
+						<select >
+						    <option class="option" value="donorType">Your Donation Type</option>
+						    <option class="option" value="Dry">Dry Food</option>
+						    <option class="option" value="Cook">Cooked Food</option>
+						</select>
+						<span class="select-btn">
+						  	<i class="zmdi zmdi-chevron-down"></i>
+						</span>
+					</div>
+					<div class="form-group">
+						<div class="form-row form-row-1">
+							<input type="text" asp-for="fName"  class="input-text" placeholder="First Name" id="fname" >
+						</div>
+						<div class="form-row form-row-2">
+							<input type="text" asp-for="lName"  class="input-text" placeholder="Last Name" id="lname" >
+						</div>
+					</div>
+					<div class="form-row pwd">
+						<input type="password" asp-for="user.UserPwd" id="pwd" placeholder="Password" >
+						
+				  <span class="p-viewer">
+					<i class="fa fa-eye" aria-hidden="true" id="togglePassword"></i>
+				</span>
+						<span style="font-size:x-small;">include 6-20 characters, 1 numeric digit, 1 uppercase and 1 lowercase letter</span>
+					</div> 
+					<div class="form-row">
+						<input type="text" asp-for="user.UserEmail" id="email" class="email"  placeholder="Email">
+					</div> 
+					<div class="form-row">
+						<input type="date" asp-for="user.UserBirth" id="birth" placeholder="BirthDate" >
+						</div>
+					<div class="form-row">
+						<input type="text" name="business" class="" id="business" placeholder="Business Name" >
+					</div> 
+				</div>
+
+				<div class="form-right">
+					<h2>Contact Details</h2>
+					<div class="form-row">
+						<input type="text" asp-for="add1" class="street" id="add1" placeholder="Address 1">
+					</div>
+					<div class="form-row">
+						<input type="text" asp-for="add2" class="additional" id="add2" placeholder="Address 2" >
+					</div>
+					<div class="form-group">
+						<div class="form-row form-row-1">
+							<input type="text" asp-for="zip" class="zip" id="zip" placeholder="Zip Code" >
+						</div>
+						<div class="form-row form-row-2">
+						<input type="text" asp-for="city" id="city" placeholder="City">
+							
+						</div>
+					</div>
+					<div class="form-row">
+						<select asp-for="state" id="state" required>
+							<option value="state" >State</option>
+						    <option value="Johor" selected>Johor</option>
+							<option value="others">Others</option>
+						</select>
+						<span class="select-btn">
+						  	<i class="zmdi zmdi-chevron-down"></i>
+						</span>
+					</div>
+					<div class="form-group">
+						<div class="form-row form-row-1">
+							<input type="text" asp-for="code" class="code" id="code" placeholder="Code +" required>
+						</div>
+						<div class="form-row form-row-2">
+							<input type="text" asp-for="phone" class="phone" id="phone" placeholder="Phone Number" pattern="\d{9,11}" required>
+						</div>
+					</div>
+					<div class="form-checkbox">
+						<label class="container"><p>I do accept the <a asp-page="TermsCondition" class="text">Terms and Conditions</a> of your site.</p>
+						  	<input type="checkbox" name="checkbox" required>
+						  	<span class="checkmark"></span>
+						</label>
+					</div>
+					<div class="form-row-last ">
+						<input type="submit" class="register" value="Register">
+					</div>
+				</div>
+			</form>
+			<script type="text/javascript">
+    var togglePassword = document.querySelector('#togglePassword');
+    var password = document.querySelector('#pwd');
+    togglePassword.addEventListener('click', function (e) {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        this.classList.toggle('fa-eye-slash');
+    });
+</script> 
+			@if (ViewData["Message"] != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewData["Message"]");
+            };
+        </script>
+    }
+			<script src="/js/validation.js"></script>
+
+
+		</div>
+	</div>
+
+</body>
+}

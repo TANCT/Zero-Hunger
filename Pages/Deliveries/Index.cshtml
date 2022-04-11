@@ -1,0 +1,64 @@
+@page
+@using System.Collections
+@model ZeroHunger.Pages.Deliveries.IndexModel
+
+@if (@HttpContext.Request.Cookies["role"] != null && @HttpContext.Request.Cookies["role"].Equals("4"))
+{
+<div class="container p=3">
+    <div class="row pt-4">
+        <div class="col-8 text-left">
+            <h2 style="color:black;">Delivery Request</h2>
+        </div>
+        <div class="col-4 text-right">
+            <a asp-page="Create" class="btn btn-info">
+                <i class="bi bi-pencil-square"></i> &nbsp; Create New Delivery Request
+            </a>
+        </div>
+    </div>  
+</div>
+<br/><br/>
+
+<table id="delivery_load" class="table table-bordered table-striped" style="text-align:center">
+    <thead>
+        <tr>
+            <th>
+                Delivery ID
+            </th>
+            <th>
+                Volunteer Name
+            </th>
+            <th>
+                Delivery Time
+            </th>
+            <th>
+                Delivery Status
+            </th>
+                <th>
+                Receiver Name
+            </th>
+            <th>
+                Receiver Phone
+            </th>
+            <th>
+                Receiver Address
+            </th>
+            <th>
+                Delivery Item
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+</table>         
+
+@section Scripts{
+    <script src="~/js/DeliveryList.js"></script>
+    @{
+    <partial name="_ValidationScriptsPartial"></partial>
+    }
+}
+}else{
+     <script>
+     alert("Sorry, you are not eligible to enter this page.");
+     location.href = '/Index';
+     </script>
+}

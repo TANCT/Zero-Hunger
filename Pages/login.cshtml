@@ -1,0 +1,108 @@
+@page
+@model ZeroHunger.Pages.loginModel
+@{
+	<head>
+  	<title>Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<link rel="stylesheet" href="css/style.css">
+	<style>
+	.pwd{
+	position: relative;
+}
+.p-viewer {
+	z-index: 9999;
+	position: absolute;
+	top: 20%;
+	right: 10px;
+}
+
+	</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	</head>
+	<body>
+	<section class="">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-6 text-center mb-2">
+				<br>
+					<h2 class="heading-section"><b>Login</b></h2>
+				</div>
+			</div>
+			<div class="row justify-content-center">
+				<div class="col-md-6 col-lg-5">
+					<div class="login-wrap p-4 p-md-5">
+		      	<div class="icon d-flex align-items-center justify-content-center">
+		      		<span class="fa fa-user-o"></span>
+		      	</div>
+		      	<h3 class="text-center mb-4">Have an account?</h3>
+						<form method="post" class="login-form">
+						<div class="text-danger" asp-validation-summary="ModelOnly"></div>
+		      		<div class="form-group">
+					  <label asp-for="user.UserEmail" style="display:none;"></label>
+		      		<input asp-for="user.UserEmail" class="form-control rounded-left" placeholder="Email" required>
+					</div>
+					<span class="text-danger" asp-validation-for="user.UserEmail"></span>
+	            <div class="form-group d-flex pwd">
+				<label asp-for="user.UserPwd" style="display:none;"></label>
+	              <input type="password" asp-for="user.UserPwd" class="form-control rounded-left" id="pwd" placeholder="Password" required>
+	            <div style="padding-top:5px;">
+				  <span class="p-viewer">
+					<i class="fa fa-eye" aria-hidden="true" id="togglePassword"></i>
+				</span>
+				  </div>
+				  </div>
+				  
+				<span class="text-danger" asp-validation-for="user.UserPwd"></span>
+	            <div class="form-group d-md-flex">
+	            	<div class="w-50 form-check">
+	            		<label class="checkbox-wrap checkbox-primary" asp-for="remember">Remember Me
+									  <input asp-for="remember" value="true" type="checkbox" checked>
+									  <span class="checkmark"></span>
+									</label>
+								</div>
+								<div class="w-50 text-md-right">
+									<a asp-page="ForgotPassword" style="color:#ff9494;">Forgot Password</a>
+								</div>
+	            </div>
+	            <div class="form-group">
+	            	 <input type="submit" value="Login" class="btn btn-primary form-control" />
+					 @if (ViewData["Message"] != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                alert("@ViewData["Message"]");
+            };
+        </script>
+    }
+	            </div>
+	          </form>
+			  <script type="text/javascript">
+    var togglePassword = document.querySelector('#togglePassword');
+    var password = document.querySelector('#pwd');
+    togglePassword.addEventListener('click', function (e) {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        this.classList.toggle('fa-eye-slash');
+    });
+</script> 
+	        </div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script src="js/jquery.min.js"></script>
+  <script src="js/popper.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/main.js"></script>
+  </body>
+	}
+
+
+

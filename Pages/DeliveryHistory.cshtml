@@ -1,0 +1,106 @@
+﻿@page
+@model ZeroHunger.Pages.DeliveryHistoryModel
+@{
+    var i = 0;
+    
+}
+@if (@HttpContext.Request.Cookies["role"] != null && @HttpContext.Request.Cookies["role"].Equals("1")){
+<head>
+    
+    <style>
+        .deliveryitem{
+            background-color:white;
+            box-shadow: 4px 3px 8px 1px #969696;
+  	        -webkit-box-shadow: 4px 3px 8px 1px #969696;
+            width:60%;
+            height:fit-content;
+            padding:10px;
+            border-radius: 25px;
+            margin:10px;
+            text-align:center;
+
+        }
+        
+        .major{
+            display:flex;
+            flex-direction:column;
+            justify-content:space-evenly;
+           align-content:center;
+           align-items:center;
+        }
+       
+        span{
+            
+            font-family:'Comic Sans MS';
+            font-weight:bold;
+            color:black;
+
+        }
+        
+        h5{
+            font-family: 'Arial Rounded MT';
+            
+        }
+        h1{
+            font-family: 'Arial Rounded MT';
+            font-weight:bold;
+            color:#0d98ba;
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+
+
+            <h1 style="color:black;">Delivery History</h1>
+
+
+
+    <div class="major" >
+
+        @if (!Model.deliveryList.Any())
+            {
+            <br />
+            <p style="font-size:30px" class="text-primary">No Delivery History</p><br />
+        } else {
+
+            @foreach (var obj in Model.deliveryList) {
+
+                @if (i != 0)
+                {
+                    <div class="deliveryitem">
+                        <h5>Reference ID - @obj.DeliveryID</h5>
+                        @if (obj.DeliveryStatus.ToString() == "Incomplete")
+                        {
+                            <span style="font-size:30px;">On the way...</span><br>
+                        }else if (obj.DeliveryStatus.ToString() == "Complete")
+                        {
+                            <span style="font-size:30px;">Delivered</span><br>
+                        }else if (obj.DeliveryStatus.ToString() == "Pending") {
+                            <span style="font-size:30px;">Pending...</span><br>
+                        }
+
+                        <p>Delivery Time: @obj.DeliveryTime </p><br>
+
+
+                    </div>
+                   
+
+                }
+
+                i += 1;
+
+            }
+            
+        }
+       
+
+      
+    </div>
+</body>
+}else{
+     <script>
+     alert("Sorry, you are not eligible to enter this page.");
+     location.href = '/Index';
+     </script>
+}

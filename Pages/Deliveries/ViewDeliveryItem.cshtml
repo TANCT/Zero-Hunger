@@ -1,0 +1,76 @@
+﻿@page
+@model ZeroHunger.Pages.Deliveries.ViewDeliveryItemModel
+
+@if (@HttpContext.Request.Cookies["role"] != null && @HttpContext.Request.Cookies["role"].Equals("2"))
+{
+<div class="container p=3">
+    <div class="row pt-4">
+        <div class="col-8">
+            <h2>View Delivery Item</h2>
+        </div>
+    </div>  
+</div>
+<br/><br/>
+@if(Model.DeliveryItems.Count()>0){
+    <table class="table table-bordered table-striped" style="text-align:center">
+    <thead>
+        <tr>
+            <th>
+                Delivery Item Name
+            </th>
+            <th>
+                Quantity
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var obj in Model.DeliveryItems){
+        <tr>
+            @foreach(var dryfood in Model.DryFoods){
+                if(@dryfood.Id==@obj.DryFoodID){
+                    Model.ItemFound=true;
+                    var dryfoodname = @dryfood.DryFoodName;
+                    <td>@dryfoodname</td>
+                    <td>@obj.Quantity</td>
+                    break;
+                }
+            }
+        </tr>
+        }
+        @if(Model.ItemFound==false){
+        <tr>
+            <td colspan="2">No Delivery Item Found</td>
+        </tr>
+        }
+    </tbody>
+    </table>
+}
+else if(Model.DeliveryItems.Count()==0)
+{
+    <table class="table table-bordered table-striped" style="text-align:center">
+    <thead>
+        <tr>
+            <th>
+                Delivery Item Name
+            </th>
+            <th>
+                Quantity
+            </th>
+        </tr>
+    </thead>
+        <tbody>
+            <tr>
+                <td colspan="2">No Delivery Item Found</td>
+            </tr>
+        </tbody>
+    </table>
+}
+<br/>
+<a asp-page="VolunteerDelivery" class="btn btn-secondary form-control" style="width:300px;display:block;margin:auto">Back to Delivery Request</a>
+}else{
+     <script>
+     alert("Sorry, you are not eligible to enter this page.");
+     location.href = '/Index';
+     </script>
+}
+

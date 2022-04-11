@@ -1,0 +1,166 @@
+@page
+@model ZeroHunger.Pages.CookFoodPage.EditCookFoodModel
+@{
+    @if (@HttpContext.Request.Cookies["role"] != null && @HttpContext.Request.Cookies["role"].Equals("3"))
+    {
+<div class="page-content">
+    <form method="post" class="form-v10-content">
+        <input asp-for="cookfood.CookID" class="'form-control'" type='hidden'>
+        <h2  style="color:black;text-align:center;margin:0px 10px 30px 10px;">Edit Cooked Food Donation</h2>
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div>
+            <div class="form-group row">
+
+
+                <div class="col-4">
+                   <label asp-for="cookfood.CookName">Food Name</label>
+                </div>
+                <div class="col-6">
+					<input asp-for="cookfood.CookName" class="input-text" required>
+                </div> 
+                <div class="col-4">
+					<label asp-for="cookfood.CookQuantity">Quantity</label>
+					
+                </div>
+                <div class="col-6">
+					<input asp-for="cookfood.CookQuantity" class="input-text" required>
+                </div>
+                <div class="col-4">
+					<label asp-for="cookfood.CookLongtitude">Location Longitude</label>
+							
+                </div>
+                <div class="col-6">
+                   <input asp-for="cookfood.CookLongtitude" required>
+                </div>
+				<div class="col-4">
+					<label asp-for="cookfood.CookLatitude">Location Latitude</label>
+							
+                </div>
+                <div class="col-6">
+					<input asp-for="cookfood.CookLatitude" required>
+                </div>
+                <br>
+                    <input type="button" class="btn btn-primary" onclick="getLatLon()" value="Get Current Location" />
+                </div>
+                
+				<div id="map" style="width:800px;height:500px;margin:20px auto 20px auto">
+    
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key="></script>    
+    <script>
+        //let map, infoWindow;
+
+        function initMap() {
+    map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: -34.397, lng: 150.644 },
+        zoom: 6,
+    });
+    infoWindow = new google.maps.InfoWindow();
+
+    const locationButton = document.createElement("button");
+    //locationButton.textContent = "Pan to Current Location";
+    locationButton.classList.add("custom-map-control-button");
+    locationButton.innerHTML = "<img src='https://i.ibb.co/FnJMDQp/zerohungerlogotransparent.png' style='margin:0px 0px 0px 0px;' alt='Your Location' width='100' height='100'>";
+    locationButton.style.marginTop = "0px";
+    locationButton.style.padding = '0px 0px 0px 0px';
+    
+    locationButton.style.backgroundColor = "transparent";
+    locationButton.style.border = 'unset';
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(locationButton);
+    locationButton.addEventListener("click", () => {
+        // Try HTML5 geolocation.
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    };
+                    infoWindow.setPosition(pos);
+                    infoWindow.setContent("Location found.");
+                    infoWindow.open(map);
+                    map.setCenter(pos);
+                },
+                () => {
+                    handleLocationError(true, infoWindow, map.getCenter());
+                }
+            );
+        } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
+    });
+}
+
+        function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+            infoWindow.setPosition(pos);
+            infoWindow.setContent(
+                browserHasGeolocation
+                    ? "Error: The Geolocation service failed."
+                    : "Error: Your browser doesn't support geolocation."
+            );
+            infoWindow.open(map);
+        }
+
+		navigator.geolocation.getCurrentPosition(getLatLon);
+        function getLatLon(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            
+            document.getElementById("la").value=latitude;
+            document.getElementById("long").value=longitude;
+        }
+
+        
+    </script>
+
+
+				<div class="col-4">
+					<label asp-for="cookfood.OpenDate">Opening Time</label>
+							
+                </div>
+                <div class="col-6">
+					<input asp-for="cookfood.OpenDate"  required>
+                </div>
+                
+                <div class="col-4">
+					<label asp-for="cookfood.CloseDate">Closing Time</label>
+							
+                </div>
+                <div class="col-6">
+					<input asp-for="cookfood.CloseDate" required>
+                </div>
+				<div class="col-4">
+					<label asp-for="cookfood.Reservation">Reserved Quantity</label>
+							
+                </div>
+                <div class="col-6">
+					<input asp-for="cookfood.Reservation" required>
+                </div>
+                <div class="col-4">
+					<label asp-for="cookfood.RemainQuantity">Remaining Quantity</label>
+							
+                </div>
+                <div class="col-6">
+					<input asp-for="cookfood.RemainQuantity" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-5 offset-4">
+                    <input type="submit" value="Save" class="btn btn-primary form-control" />
+
+
+                </div>
+                <div class="col-5 offset-4">
+                    <a asp-page="CookFoodView" class="btn btn-sucess form-control">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div></div>
+}else{
+<script>
+     alert("Sorry, you are not eligible to enter this page.");
+     location.href = '/Index';
+     </script>
+}}

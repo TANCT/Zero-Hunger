@@ -1,0 +1,62 @@
+@page
+@model ZeroHunger.Pages.Deliveries.VolunteerDeliveryModel
+
+@if (@HttpContext.Request.Cookies["role"] != null && @HttpContext.Request.Cookies["role"].Equals("2"))
+{
+<div class="container p=3">
+    <div class="row pt-4">
+        <div class="col-9">
+            <h2>Delivery Request</h2>
+        </div>
+    </div>
+</div>
+
+<br/><br/>
+
+<table id="volunteer_load" class="table table-bordered table-striped w-auto" style="text-align:center">
+    <thead>
+        <tr>
+            <th>
+                Delivery ID
+            </th>
+            <th>
+                Receiver Name
+            </th>
+            <th>
+                Receiver Phone
+            </th>
+            <th>
+                Receiver Address
+            </th>       
+            <th>
+                Delivery Time
+            </th>
+            <th>
+                Delivery Status
+            </th>
+            <th>
+               Delivery Item
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+</table>
+
+@section Scripts{
+    <script src="~/js/VolunteerDelivery.js"></script>
+    @{
+        <partial name="_ValidationScriptsPartial"></partial>
+    }
+}
+}else{
+     <script>
+     alert("Sorry, you are not eligible to enter this page.");
+     location.href = '/Index';
+     </script>
+}
+
+
+
+

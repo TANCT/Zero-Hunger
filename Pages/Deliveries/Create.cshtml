@@ -1,0 +1,73 @@
+@page 
+@using ZeroHunger.Model
+@model ZeroHunger.Pages.Deliveries.CreateModel
+
+@if (@HttpContext.Request.Cookies["role"] != null && @HttpContext.Request.Cookies["role"].Equals("4"))
+{
+    <form method="post" asp-page="Create">
+        <br/>
+        <h2>Create Delivery Request</h2>
+        <br/>
+        @Html.AntiForgeryToken()
+        <div class="border p-3 mt-4">
+            <div asp-validation-summary="All" class="text-danger"></div> 
+            <div class="mb-3">
+                Volunteer Name
+                <select asp-for="Delivery.VolunteerID"  asp-items="Model.VolunteerList" class="form-control" required>-->
+                </select>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Delivery.DeliveryTime"></label>
+                <input type="datetime-local" asp-for="Delivery.DeliveryTime" id="deliverytime" class="form-control" onclick="setMinTime()" required/>        </div>
+            <div class="mb-3">
+                <label asp-for="Delivery.DeliveryStatus"></label>
+                <select class="form-control" asp-for="Delivery.DeliveryStatus" asp-items="Html.GetEnumSelectList<DeliveryStatus>()"></select>
+            </div>
+            <div class="mb-3">
+                Receiver Name
+                <select id="receiver" asp-for="Delivery.ReceiverID" asp-items="Model.ReceiverList" class="form-control" required>
+                </select>
+            </div>
+            <div class="mb-3">
+                Receiver Phone
+                <span id="receiverphone" class="form-control">----</span>
+            </div>
+            <div class="mb-3">
+                Receiver Address
+                <div id="receiveradrs1" class="form-control">----</div>
+                <div id="receiveradrs2" class="form-control">----</div>
+            </div>
+            <button type="submit" class="btn btn-primary form-control" style="width:150px;">Create</button>
+            <a asp-page="Index" class="btn btn-secondary form-control" style="width:150px;">Back to List</a>  
+    </div>
+    </form>
+    <br/><br/><br/><br/><br/>
+    @section Scripts{
+       <script src="~/js/DeliveryItem.js"></script>
+       <script>
+            function setMinTime()
+            {
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth()+1; //January is 0 so need to add 1 to make it 1!
+                var yyyy = today.getFullYear();
+                if(dd<10){
+                  dd='0'+dd
+                } 
+                if(mm<10){
+                  mm='0'+mm
+                } 
+
+                var min = yyyy+'-'+mm+'-'+dd+'T00:00';
+                var max = yyyy+'-'+mm+'-'+dd+'T23:59';
+                document.getElementById("deliverytime").setAttribute("min", min);
+                document.getElementById("deliverytime").setAttribute("max", max);
+            }
+        </script>
+    }
+}else{
+     <script>
+     alert("Sorry, you are not eligible to enter this page.");
+     location.href = '/Index';
+     </script>
+}

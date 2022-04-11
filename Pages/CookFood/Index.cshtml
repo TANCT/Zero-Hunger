@@ -1,0 +1,121 @@
+﻿@page
+@model ZeroHunger.Pages.CookFood.IndexModel
+
+<div style="display:flex;justify-content:center;margin-bottom:20px;" >
+    <h1 style="text-align:center;margin:0px 20px 0px 20px ;">Cook Food Donation</h1>
+   
+    <form method="post" id="updateForm" asp-page-handler="Update">
+        <input type="hidden" name="handler" value="Update" />
+        <input type="hidden" id="userLat" name="userLat" value="@Model.u.latitude" />
+        <input type="hidden" id="userLon" name="userLon" value="@Model.u.longitute" />
+        <button class="btn btn-info" onclick="navigator.geolocation.getCurrentPosition(fillLatLon, error, options); return false;">Update Location</button>
+
+    </form>
+</div>
+        <div class='promptContainer' id="promptContainer">
+            <div style="display:flex;justify-content:center;background-color:transparent;">
+                <div class='promptTitle'>Donation   <i class="bi bi-x-square-fill" onClick="closeRePrompt();" id="closeWindow"></i></div>
+                
+            </div>
+            <form method="post">
+                <div style="display: flex; justify-content: center; background-color: transparent;">
+
+                    <table>
+                        <tr>
+                            <th class='tableLeft'>Shop Name</th>
+                            <td id='pFoodShopName' class='tableLeft'></td>
+                        </tr>
+                        <tr>
+                            <th class='tableLeft'>Food Name</th>
+                            <td id='pFoodName' class='tableLeft'></td>
+                        </tr>
+                        <tr>
+                            <th class='tableLeft'>Quantity</th>
+                            <td id="pFoodQuantity" class='tableLeft'></td>
+                        </tr>
+                        <tr>
+                            <th class='tableLeft'>Distance</th>
+                            <td id="pFoodDistance" class='tableLeft'></td>
+                        </tr>
+
+                    </table>
+                    <input id="pFoodId" type="hidden" asp-for="id" value="0" />
+
+                </div>
+                <div style="display: flex; justify-content: center; background-color: transparent;">
+                    <input type='submit' value='Reserve' class="btn" id='reservedBut'>
+                </div>
+            </form>
+        </div>
+
+        <div id="CookFoodContainer">
+            <div id="map" style="width:80vw;height:80vh;"class="d-xl-block d-none">
+                <script async defer src="https://maps.googleapis.com/maps/api/js?key="></script>
+               
+            </div>
+            
+            
+            <div id="list">
+                
+
+                <div id="pageButtonContainer">
+
+                    <a href="CookFood?page=@(Model.page - 1)" id="pPage" class="btn btn-info"><</a>
+                    
+
+                </div>
+
+                @if (Model.CFD.Count() == 0)
+                {
+                    <p>No Cooked Food In List</p>
+                }
+                else
+                {
+               
+                    @for (int i = Model.page * 4; i < Model.CFD.Count()&&i<=Model.page+3; i++)
+                {
+            <div id="itemContainer" name="itemContainer" onClick="displayItemBox('@Model.CFD.ElementAt(i).ShopName', '@Model.CFD.ElementAt(i).CookName', ' @(Model.CFD.ElementAt(i).RemainQuantity-Model.CFD.ElementAt(i).Reservation)', '@Model.CFD.ElementAt(i).CookID')">
+                <div id="itemInfo">
+                    <div>
+                        <div id="itemName" name="itemName">
+                            @Model.CFD.ElementAt(i).CookName
+
+                        </div>
+                        <div id="itemQuantity">
+                            @(Model.CFD.ElementAt(i).RemainQuantity- Model.CFD.ElementAt(i).Reservation)/@Model.CFD.ElementAt(i).RemainQuantity
+                        </div>
+                    </div>
+                    <p hidden id="itemCount">@Model.count</p>
+                    <p hidden name="itemLat">@Html.DisplayFor(m => Model.CFD.ElementAt(i).CookLatitude)</p>
+                    <p hidden name="itemLon">@Html.DisplayFor(m => Model.CFD.ElementAt(i).CookLongtitude)</p>
+
+
+                    <div name="itemDistance" id="itemDistance.@Model.CFD.ElementAt(i).CookID">
+                        <b>@Html.DisplayFor(m => Model.CFD.ElementAt(i).distance) km</b>
+                    </div>
+                </div>
+
+            </div>
+                }
+                    @foreach (var item in Model.CFD)
+                    {
+
+
+                        
+
+
+                    }
+
+
+                }
+            <div id="pageButtonContainer">
+
+                
+                <a href="CookFood?page=@(Model.page+1)" id="pPage" class="btn btn-info">></a>
+
+            </div>
+            </div>
+
+        </div>
+        
+ 

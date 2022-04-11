@@ -1,0 +1,26 @@
+<head>
+    <style>
+        .a{
+            display:inline-block;
+            float:right;
+        }
+    </style>
+</head>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <a class="nav-link nav-item" style="color:#ff9494;" asp-page="/profile"><i class="fa fa-2x fa-user-circle"></i></a>
+    @if (Context.Request.Cookies["name"] != null)
+    {
+        <form method="post" class="form-inline" asp-page="/Logout">
+            @Context.Request.Cookies["name"]
+            <button type="submit" class="ml-2 btn btn-link" style="color:#ff9494;">Logout</button>
+        </form>
+    }
+}
+else
+{
+    
+    <a class="nav-link nav-item" style="color:#ff9494;" asp-page="/login">Login</a>
+   <a class="nav-link nav-item" style="color:#ff9494;" asp-page="/UserType">Register</a>
+}

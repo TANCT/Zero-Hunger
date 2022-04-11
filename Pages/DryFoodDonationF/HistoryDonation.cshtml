@@ -1,0 +1,48 @@
+﻿@page
+@model ZeroHunger.Pages.DryFoodDonationF.HistoryDonationModel
+@{
+}
+<div class="col-9">
+    <a style="font-size:large;color:grey;" asp-page="DryFoodIndex">Dry Food Donation</a>
+    <h4>Donation History</h4>
+</div>
+<div class="col-12 text-right">
+    <button align="center" class="btn btn-danger" onclick="javascript:generatePDF();">Generate PDF</button>
+</div>
+<div class="col-12  p-3 mt-3 " id="printTable">
+
+    <table id="DT_load" class="table table-striped table-bordered" style="width:100%">
+
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Delivery Method</th>
+                <th>Pick Up Date</th>
+                <th>Remark</th>
+                
+            </tr>
+        </thead>
+
+    </table>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/DryFoodHistory.js"></script>
+    <script>
+        function generatePDF() {
+            var pTable = document.getElementById('printTable').innerHTML;
+            var win = window.open('', '', 'height=100%,width=100%');
+            win.document.write('<html><head><title>Dry Food Donation History</title>');
+            win.document.write('<style> h2{text-align:center;} #printTable{margin-left:auto; margin-right:auto;} th,td{border: 1px solid black;} table,th,td{ border-collapse:collapse; margin:20px auto;} th:last-child,td:last-child{display:none; border:0;} td{text-align:center;}</style>');
+            win.document.write('</head><body>');
+            win.document.write('<h2>Dry Food Donation History</h2>');
+            win.document.write(pTable);
+            win.document.write('</body></html>');
+            win.document.close();
+            win.print();
+            setTimeout(function () { win.close() }, 500);
+        }
+    </script>
+}

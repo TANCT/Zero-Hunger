@@ -1,0 +1,170 @@
+﻿@page
+@model ZeroHunger.Pages.FamilyStatusModel
+@using ZeroHunger.Model
+@{
+    <head>
+<content charset="utf-8">
+	<title>Family Status</title>
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+	<link rel="stylesheet" type="text/css" href="../css/montserrat-font.css">
+	<link rel="stylesheet" type="text/css" href="../fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+	<!-- Main Style Css -->
+    <link rel="stylesheet" href="../css/style2.css"/>
+	</head>
+	<body>
+	<br />
+	<h2 class="text-info">Family Status</h2>
+	<p>Note: Food Bank recipients will be reviewed every six month on eligibility to receive food aids.</p>
+	<br />
+	
+			<form method="post" >
+				<div class="text-danger" asp-validation-summary="ModelOnly"></div>    
+				<div class="border container" style="padding:30px">
+				<input type="text" asp-for="receiver.receiverIC" value=@Model.receiver.receiverIC hidden>
+				
+					<h4>@Html.DisplayFor(Receiver => Model.receiver.receiverName)</h4>
+
+				<div class="form-group row">
+					 <div class="col-4">
+					   <label asp-for="receiver.receiverOccupation ">Employment Status</label>
+					</div>
+					<div class="col-6" >
+					
+				
+						<label asp-for="receiver.receiverOccupation">Current Job</label>
+						<input type="text" asp-for="receiver.receiverOccupation" value="@Model.receiver.receiverOccupation">
+						<br /><label asp-for="receiver.receiverCompany">School or Company</label>
+						<input type="text" asp-for="receiver.receiverCompany" value="@Model.receiver.receiverCompany">
+						<br /><label asp-for="receiver.receiverSalaryGroupID">Salary (RM)</label>
+						<select asp-for="receiver.receiverSalaryGroupID">
+									<option value="@Model.receiver.receiverSalaryGroupID" disabled selected>@Html.DisplayFor(SalaryGroup => Model.salaryGroups.ElementAt(Model.receiver.receiverSalaryGroupID).salaryRange) </option>
+									<option value=0>0</option>
+									<option value=1>1-500</option>
+									<option value=2>501-1000</option>
+									<option value=3>1001-1500</option>
+									<option value=4>1501-2000</option>
+									<option value=5>>2000</option>
+							</select>
+					</div>
+               </div>
+			   <div class="form-group row">
+					 <div class="col-4">
+					   <label asp-for="receiver.healthStatus">Health Status</label>
+					</div>
+					<div class="col-6" >
+					<select asp-for="receiver.healthStatus">
+						<option value="Healthy">Healthy</option>
+						<option value="Sick">Sick</option>
+					</select><br>
+					<p>If sick:</p>
+					<label asp-for="rDuration">Duration</label>
+					<input type="text" asp-for="rDuration">
+					<br /><label asp-for="rInsurance">Insurance/SOCSO</label>
+					<select asp-for="rInsurance">
+							<option value="true">Yes</option>
+							<option value="false">No</option>
+						</select>
+					<br /><label asp-for="rhospital">Private/ Gov Hospital</label>
+					<select asp-for="rhospital">
+							<option value="Private Hospital">Private Hospital</option>
+							<option value="Gov Hospital">Gov Hospital</option>
+						</select>
+					<br /><label asp-for="rMCost">Medical Cost</label>
+					<input type="text" asp-for="rMCost">
+					</div>
+					</div>
+               <div class="form-group row">
+					 <div class="col-4">
+					   <label asp-for="receiver.unhealthyHabit">Unhealthy Habit</label>
+					</div>
+					<div class="col-6" >
+					
+						<input type="checkbox" asp-for="rSmoking" value="true">
+						<label asp-for="receiver.unhealthyHabit">Smoking</label>
+						<input type="checkbox" asp-for="rDrinking" value="true">
+						<label asp-for="receiver.unhealthyHabit">Drinking</label>
+						<input type="checkbox" asp-for="rGambling" value="true">
+						<label asp-for="receiver.unhealthyHabit">Gambling</label>
+					</div>
+               </div>
+
+			   @if( Model.receiver.receiverFamilyNo>0)
+			   {
+				   @for(int i=0;i<Model.receiverFamilies.Count();i++)
+					{
+						<input type="text" asp-for="receiverFamilies[i].familyIC" value=@Model.receiverFamilies[i].familyIC hidden>
+				
+					<h4>@Html.DisplayFor(ReceiverFamily => Model.receiverFamilies.ElementAt(i).familyName)</h4>
+
+				<div class="form-group row">
+					 <div class="col-4">
+					   <label asp-for="receiverFamilies[i].familyOccupation">Employment Status</label>
+					</div>
+					<div class="col-6" >
+					
+				
+						<label asp-for="receiverFamilies[i].familyOccupation">Current Job</label>
+						<input type="text" asp-for="receiverFamilies[i].familyOccupation" value="@Model.receiverFamilies[i].familyOccupation">
+						<br /><label asp-for="receiverFamilies[i].familyCompanyOrSchool">School or Company</label>
+						<input type="text" asp-for="receiverFamilies[i].familyCompanyOrSchool" value="@Model.receiverFamilies[i].familyCompanyOrSchool">
+						<br /><label asp-for="receiverFamilies[i].familySalaryGroupID">Salary (RM)</label>
+						<select asp-for="receiverFamilies[i].familySalaryGroupID">
+									<option value="@Model.receiverFamilies[i].familySalaryGroupID" disabled selected>@Html.DisplayFor(SalaryGroup => Model.salaryGroups.ElementAt(Model.receiverFamilies[i].familySalaryGroupID).salaryRange) </option>
+									<option value=0>0</option>
+									<option value=1>1-500</option>
+									<option value=2>501-1000</option>
+									<option value=3>1001-1500</option>
+									<option value=4>1501-2000</option>
+									<option value=5>>2000</option>
+							</select>
+					</div>
+               </div>
+			   <div class="form-group row">
+					 <div class="col-4">
+					   <label asp-for="receiverFamilies[i].healthStatus">Health Status</label>
+					</div>
+					<div class="col-6" >
+					<select asp-for="receiverFamilies[i].healthStatus">
+						<option value="Healthy">Healthy</option>
+						<option value="Sick">Sick</option>
+					</select><br>
+					<p>If sick:</p>
+					<label asp-for="fDuration[i]">Duration</label>
+					<input type="text" asp-for="fDuration[i]">
+					<br /><label asp-for="fInsurance[i]">Insurance/SOCSO</label>
+					<select asp-for="fInsurance[i]">
+							<option value="true">Yes</option>
+							<option value="false">No</option>
+						</select>
+					<br /><label asp-for="fhospital[i]">Private/ Gov Hospital</label>
+					<select asp-for="fhospital[i]">
+							<option value="Private Hospital">Private Hospital</option>
+							<option value="Gov Hospital">Gov Hospital</option>
+						</select>
+					<br /><label asp-for="fCost[i]">Medical Cost</label>
+					<input type="text" asp-for="fCost[i]">
+					</div>
+					</div>
+               <div class="form-group row">
+					 <div class="col-4">
+					   <label asp-for="receiver.unhealthyHabit">Unhealthy Habit</label>
+					</div>
+					<div class="col-6" >
+					
+						<input type="checkbox" asp-for="fSmoking[i]" value="true">
+						<label asp-for="fSmoking[i]">Smoking</label>
+						<input type="checkbox" asp-for="fDrinking[i]" value="true">
+						<label asp-for="fDrinking[i]">Drinking</label>
+						<input type="checkbox" asp-for="fGambling[i]" value="true">
+						<label asp-for="fGambling[i]">Gambling</label>
+					</div>
+               </div>
+					}
+				}
+				<input type="submit" value="Submit">
+			</form>
+	
+	</body>
+}

@@ -1,0 +1,64 @@
+﻿@page
+@model ZeroHunger.Pages.DryFoodDonationF.AddDryFoodDonationModel
+<script src="~/js/validationricky.js"></script>
+    
+    <div class="border container" style="padding:30px">
+        <div id="errorMessagediv" style="display:none;margin:10px 0px 10px 0px;color:red;"></div>
+        <form method="Post" class="form-v10-content" onsubmit="return ValidateDryFood();">
+            <h2 style="color:black;text-align:center;margin:0px 10px 30px 10px;">Donate Dry Food</h2>
+            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="DFD.DryFoodName">Dry Food Name</label>
+                </div>
+                <div class="col-6">
+                    <input asp-for="DFD.DryFoodName" class="form-control" id='dryName' required>
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="DFD.DryFoodQuantity">Dry Food Quantity</label>
+                </div>
+                <div class="col-6">
+                    <input asp-for="DFD.DryFoodQuantity" class="form-control" min="1" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="DFD.DeliveryMethod">Delivery Method</label>
+                </div>
+                <div class="col-6">
+                    <Select asp-for="DFD.DeliveryMethod" class="form-control" id="deliveryMethod" required>
+                        <option value="Self Pick">Self Delivery</option>
+                        <option value="448 Delivery" selected>448 Delivery</option>
+                    </Select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="DFD.DryFoodPickDate">Pick-up Date Available</label>
+                </div>
+                <div class="col-6">
+                    <input type='date' asp-for="DFD.DryFoodPickDate" class="form-control" id='pickDate' required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="DFD.DryFoodRemark">Remark</label>
+                </div>
+                <div class="col-6">
+                    <textarea asp-for="DFD.DryFoodRemark" class="form-control" required></textarea>
+                </div>
+            </div>
+
+            <div class="col-5 offset-4">
+                <input type="submit" value="Create" class="btn btn-primary form-control" />
+                <a asp-page="DryFoodIndex" class="btn btn-sucess form-control">Back to List</a>
+            </div>
+
+
+        </form>
+    </div>
+

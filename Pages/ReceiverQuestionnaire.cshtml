@@ -1,0 +1,212 @@
+﻿@page
+@model ZeroHunger.Pages.ReceiverQuestionnaireModel
+@{
+    <head>
+<content charset="utf-8">
+	<title>Form-v10 by Colorlib</title>
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+	<link rel="stylesheet" type="text/css" href="../css/montserrat-font.css">
+	<link rel="stylesheet" type="text/css" href="../fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+	<!-- Main Style Css -->
+    <link rel="stylesheet" href="../css/style2.css"/>
+	<script language="javascript">
+
+		function soHouseChecked()
+		{
+			if (document.getElementById('soHouse').checked) 
+			{
+				document.getElementById('soHouseLoan').hidden=false;
+				document.getElementById('soHouseRent').hidden=false;
+				document.getElementById('soHouseLoanLabel').style.display= "inline";
+				document.getElementById('soHouseRentLabel').style.display= "inline";
+				document.getElementById('soHouseRentLabel1').style.display= "inline";
+			}
+			else
+			{
+				document.getElementById('soHouseLoan').hidden=true;
+				document.getElementById('soHouseRent').hidden=true;
+				document.getElementById('soHouseLoanLabel').style.display= "none";
+				document.getElementById('soHouseRentLabel').style.display= "none";
+				document.getElementById('soHouseRentLabel1').style.display= "none";
+			}
+		}
+		function rHouseChecked()
+		{
+			if (document.getElementById('rHouse').checked) 
+			{
+				document.getElementById('rHouseLoan').hidden=false;
+				document.getElementById('rHouseLoanLabel').style.display= "inline";
+			}
+			else
+			{
+				document.getElementById('rHouseLoan').hidden=true;
+				document.getElementById('rHouseLoanLabel').style.display= "none";
+			}
+		}
+		function carChecked()
+		{
+			if (document.getElementById('car').checked) 
+			{
+				document.getElementById('carLoan').hidden=false;
+				document.getElementById('carLoanLabel').style.display= "inline";
+			}
+			else
+			{
+				document.getElementById('carLoan').hidden=true;
+				document.getElementById('carLoanLabel').style.display= "none";
+			}
+		}
+		function motorcycleChecked()
+		{
+			if (document.getElementById('motorcycle').checked) 
+			{
+				document.getElementById('motorcycleLoan').hidden=false;
+				document.getElementById('motorcycleLoanLabel').style.display= "inline";
+			}
+			else
+			{
+				document.getElementById('motorcycleLoan').hidden=true;
+				document.getElementById('motorcycleLoanLabel').style.display= "none";
+			}
+		}
+		function relativesChecked()
+		{
+			if (document.getElementById('relatives').checked) 
+			{
+				document.getElementById('relativesSponsor').hidden=false;
+				document.getElementById('adopt').hidden=false;
+				document.getElementById('relativesSponsorLabel').style.display= "inline";
+				document.getElementById('adoptLabel').style.display= "inline";
+				document.getElementById('adoptLabel1').style.display= "inline";
+			}
+			else
+			{
+				document.getElementById('relativesSponsor').hidden=true;
+				document.getElementById('adopt').hidden=true;
+				document.getElementById('relativesSponsorLabel').style.display= "none";
+				document.getElementById('adoptLabel').style.display= "none";
+				document.getElementById('adoptLabel1').style.display= "none";
+			}
+		}
+		function otherSponsorshipsChecked()
+		{
+			if (document.getElementById('otherSponsorships').checked) 
+			{
+				document.getElementById('otherSponsorshipsSponsor').hidden=false;
+				document.getElementById('otherSponsorshipsSponsorLabel').style.display= "inline";
+			}
+			else
+			{
+				document.getElementById('otherSponsorshipsSponsor').hidden=true;
+				document.getElementById('otherSponsorshipsSponsorLabel').style.display= "none";
+			}
+		}
+
+	</script>
+	</head>
+	<body>
+	<br />
+	<h2 class="text-info">Questionnaire</h2>
+	<p>Note: Food Bank recipients will be reviewed every six month on eligibility to receive food aids.</p>
+	<br />
+		<div class="border container" style="padding:30px">
+			<form method="post" >
+				<input type="text" asp-for="questionnaire.receiverIC" value=@Model.receiver.receiverIC hidden>
+				<div class="text-danger" asp-validation-summary="ModelOnly"></div>    
+
+				<div class="form-group row">
+					 <div class="col-4" style="">
+					   <label asp-for="questionnaire.reason">Circumstances of applicant/ Reasons for application</label>
+					</div>
+					<div class="col-6" >
+						<input asp-for="questionnaire.reason" class="form-control" placeholder="Lost job" required>
+					</div>
+               </div>
+
+			   <div class="form-group row">
+					 <div class="col-4" style="">
+					   <label asp-for="questionnaire.otherSponsorship">Others Sponsorship (if have)</label>
+					</div>
+					<div class="col-6" >
+						<input asp-for="relatives" type="checkbox" id="relatives" value="true" onclick="relativesChecked()">Siblings, Friends/Relatives<br>
+						<label asp-for="relativesSponsor" id="relativesSponsorLabel" style="display:none;">RM/month</label>
+						<input type="text" id="relativesSponsor" class="form-control" asp-for="relativesSponsor" pattern="[0-9]+(\.[0-9][0-9]?)?" hidden=true>
+						<label asp-for="adopt" id="adoptLabel" style="display:none;">Possibility to adopt your children</label>
+						<select asp-for="adopt" id="adopt" hidden="true">
+							<option value="true">Yes</option>
+							<option value="false">No</option>
+						</select>
+						<label asp-for="adopt" id="adoptLabel1" style="display:none;"><br /></label>
+
+						<input asp-for="otherSponsorships" type="checkbox" id="otherSponsorships" value="true" onclick="otherSponsorshipsChecked()">Others NGO sponsorship eg. OKU, KISS<br>
+						<label asp-for="otherSponsorshipsSponsor" id="otherSponsorshipsSponsorLabel" style="display:none;">RM/month</label>
+						<input type="text" id="otherSponsorshipsSponsor" class="form-control" asp-for="otherSponsorshipsSponsor" pattern="[0-9]+(\.[0-9][0-9]?)?" hidden=true>
+
+					</div>
+               </div>
+			   <div class="form-group row">
+					 <div class="col-4" style="">
+						<p>Type of Property (and the expenses)</p>
+					</div>
+					<div class="col-6" >
+						<input asp-for="property_soHouse" type="checkbox" id="soHouse" value="true" onclick="soHouseChecked()">Self-Owned House <br>
+						<label asp-for="property_soHouseLoan" id="soHouseLoanLabel" style="display:none;">RM/month</label>
+						<input type="text" id="soHouseLoan" class="form-control" asp-for="property_soHouseLoan" pattern="[0-9]+(\.[0-9][0-9]?)?" hidden=true>
+						<label asp-for="property_soHouseRent" id="soHouseRentLabel" style="display:none;">Possibility to renting out spare room</label>
+						<select asp-for="property_soHouseRent" id="soHouseRent" hidden="true">
+							<option value="true">Yes</option>
+							<option value="false">No</option>
+						</select>
+						<label asp-for="property_soHouseRent" id="soHouseRentLabel1" style="display:none;"><br /></label>
+
+						<input asp-for="property_rHouse" type="checkbox" id="rHouse" value="true" onclick="rHouseChecked()">Rented House <br>
+						<label asp-for="property_rHouseLoan" id="rHouseLoanLabel" style="display:none;">RM/month</label>
+						<input type="text" id="rHouseLoan" class="form-control" asp-for="property_rHouseLoan" pattern="[0-9]+(\.[0-9][0-9]?)?" hidden=true>
+
+						<input asp-for="car" type="checkbox" id="car" value="true" onclick="carChecked()">Car<br>
+						<label asp-for="carLoan" id="carLoanLabel" style="display:none;">RM/month</label>
+						<input type="text" id="carLoan" class="form-control" asp-for="carLoan" pattern="[0-9]+(\.[0-9][0-9]?)?" hidden=true>
+
+						<input asp-for="motorcycle" type="checkbox" id="motorcycle" value="true" onclick="motorcycleChecked()">Motorcycle<br>
+						<label asp-for="motorcycleLoan" id="motorcycleLoanLabel" style="display:none;">RM/month</label>
+						<input type="text" id="motorcycleLoan" class="form-control" asp-for="motorcycleLoan" pattern="[0-9]+(\.[0-9][0-9]?)?" hidden=true>
+
+					</div>
+               </div>
+
+			   <div class="form-group row">
+					 <div class="col-4" style="">
+					   <label asp-for="questionnaire.additional">Additional Information</label>
+					</div>
+					<div class="col-6" >
+						<label asp-for="partTime">Did 15 years old and above children work as part time during weekends/ holiday to support family?</label>
+						<select asp-for="partTime" id="partTime">
+							<option value="true">Yes</option>
+							<option value="false">No</option>
+						</select><br>
+
+						<label asp-for="willingPartTime">If not, would you willing to let them work part-time?</label>
+						<select asp-for="willingPartTime" id="willingPartTime">
+							<option value="true">Yes</option>
+							<option value="false">No</option>
+						</select>
+					</div>
+               </div>
+
+
+			   <div class="form-checkbox">
+					<input type="checkbox" name="checkbox" required>I hereby declare that above information is true, and agreed to provide photos for record purposes.
+
+				</div>
+				<br>
+				 <div class="form-group row">
+                <div class="col-5 offset-4">
+                    <input type="submit" value="Next" class="btn btn-primary form-control" />
+                </div>
+			</form>
+		</div>
+	</body>
+	
+}

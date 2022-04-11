@@ -1,0 +1,167 @@
+﻿#CookFoodContainer {
+    display: flex;
+    display:block;
+    justify-content: space-around;
+  
+}
+
+#list {
+    display: flex;
+    flex-direction: row;
+    flex: 1 0 21%;
+    margin: 20px 5px 5px 5px;
+    border: 1px solid black;
+    border-radius:15px;
+    padding: 10px 10px 10px 10px;
+    width: 80vw;
+    justify-content:space-between;
+    
+}
+
+#cookfooditem {
+    margin: 5px 5px 5px 5px;
+    padding: 10px 10px 10px 10px;
+    border: 1px solid black;
+    display: none;
+    
+}
+
+#itemInfo {
+    border: 1px solid black;
+    padding: 15px 15px 15px 15px;
+    display: flex;
+    margin: 15px 15px 15px 15px;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-radius: 15px;
+    width: 100%;
+    background-image: url("../images/food.png");
+    background-size: cover;
+    background-position-y: 30%;
+    background-repeat: no-repeat;
+    background-color: white;
+}
+
+    #itemInfo:hover {
+        background-color: aquamarine;
+        cursor: pointer;
+    }
+
+#itemName {
+    margin: 0px 5px 5px 5px;
+    font-weight: bold;
+    background-color: transparent;
+}
+
+#itemQuantity {
+    margin: 0px 5px 5px 5px;
+    font-weight: bold;
+    background-color: transparent;
+}
+
+.itemDistance {
+    margin: 0px 5px 5px 5px;
+    background-color: transparent;
+}
+
+#itemContainer {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    
+   
+    
+}
+
+#vckBut {
+    margin: 15px 15px 15px 15px;
+    padding: 5px 5px 5px 5px;
+}
+
+.promptContainer {
+    display: none;
+    width: 75%;
+    min-width: 25%;
+    top: 50%;
+    left: 50%;
+    max-width: fit-content;
+    padding: 20px 20px 20px 20px;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    flex-direction: column;
+    z-index: 1;
+    background-color: white;
+    border: 2px solid black;
+    border-radius:10px;
+}
+
+.promptTitle {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 35px;
+    font-weight: bold;
+    color: #664E88;
+}
+
+.tableLeft {
+    text-align: left;
+    font-size: 20px;
+    padding: 10px 10px 10px 10px;
+    color: #ff8080;
+}
+
+#reservedBut {
+    margin-top: 20px;
+    background-color: #ff8080;
+    color: #000000;
+    border: 3px solid #FF5C58;
+    font-weight:bold;
+}
+    #reservedBut:hover {
+        margin-top: 20px;
+        background-color: #CD1818;
+    }
+#pageButtonContainer {
+    display: flex;
+    justify-content: space-between;
+    align-content:center;
+    align-items:center;
+}
+
+#nPage:hover {
+    background-color: antiquewhite;
+}
+
+
+#closeWindow {
+    color: red;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 35px;
+}
+#closeWindow:hover
+{
+    cursor:pointer;
+}
+#HistoryContainer
+{
+    display:none;
+    flex-direction:column;
+    width:100%;
+    position:relative;
+}
+#HistoryContainer:first-child {
+        width: 100%;
+
+}
+    #ReservationContainer {
+        display: flex;
+        flex-direction: column;
+    }
+.ReservationTitle
+{
+    color:black;
+    font-size:large;
+    font-weight:bold;
+}

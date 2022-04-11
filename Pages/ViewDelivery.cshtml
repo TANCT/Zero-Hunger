@@ -1,0 +1,127 @@
+@page
+@model ZeroHunger.Pages.ViewDeliveryModel
+@{
+    var i = 0;
+    
+}
+@if (@HttpContext.Request.Cookies["role"] != null && @HttpContext.Request.Cookies["role"].Equals("1")){
+<head>
+    
+    <style>
+        .deliveryitem{
+            background-color:white;
+            box-shadow: 4px 3px 8px 1px #969696;
+  	        -webkit-box-shadow: 4px 3px 8px 1px #969696;
+            width:60%;
+            height:fit-content;
+            padding:10px;
+            border-radius: 25px;
+            margin:10px;
+            text-align:center;
+
+        }
+        
+        .major{
+            display:flex;
+            flex-direction:column;
+            justify-content:space-evenly;
+           align-content:center;
+           align-items:center;
+        }
+       
+        span{
+            
+            font-family:'Comic Sans MS';
+            font-weight:bold;
+            color:black;
+
+        }
+        
+        h5{
+            font-family: 'Arial Rounded MT';
+            
+        }
+        h1{
+            font-family: 'Arial Rounded MT';
+            font-weight:bold;
+            color:black;
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+
+
+            <h1 style="color:black;">Delivery</h1>
+
+
+
+    <div class="major" >
+
+        @if (!Model.deliveryList.Any())
+            {
+                <br />
+                <p style="font-size:30px;color:blue;">No Delivery</p><br />
+            }else{
+   
+      @foreach(var obj in Model.deliveryList){
+
+            @if (i==0)
+            {
+                var status = obj.DeliveryStatus.ToString();
+                
+                    switch (status)
+                {
+                    case "Complete":
+                        <img src="https://th.bing.com/th/id/R.518cfc9e3de40195948e2a1f1108a0fe?rik=gxoBGWDJ%2fA%2bE6Q&riu=http%3a%2f%2fgifimage.net%2fwp-content%2fuploads%2f2017%2f10%2fcheck-mark-animated-gif-2.gif&ehk=N6ted5nnIMmkAIkScINm787urtfwzRQ4RvsO613AL2s%3d&risl=&pid=ImgRaw&r=0" alt="Completed" width="400" >
+                        break;
+                    case "Pending":
+                        <img src="https://images.template.net/wp-content/uploads/2016/11/16123411/PAcking-Mockup-Gif-Design.gif" alt="Pending..." width="500" >
+                        break;
+                    case "Incomplete":
+                        <img src="https://cdn.dribbble.com/users/2459530/screenshots/8029114/media/ec7402c26d95030fd111401b35482144.gif" alt="On the way..." width="500" >
+                        break;
+                    
+                }
+                <div class="deliveryitem">
+            <h5>Reference ID - @obj.DeliveryID</h5>
+                @if (obj.DeliveryStatus.ToString() == "Incomplete")
+                {
+                    <span style="font-size:30px;">On the way...</span><br>
+                }else if(obj.DeliveryStatus.ToString() == "Complete")
+                {
+                    <span style="font-size:30px;">Delivered</span><br>
+                }else{
+                    <span style="font-size:30px;">Pending...</span><br>
+                }
+          
+               <p>Delivery Time: Around @obj.DeliveryTime </p><br>
+                
+                        </div>
+                        i++;
+                    }
+
+                 @if(i != 0)
+                 {
+                        break;
+
+                    }
+
+            }
+
+            
+        }
+        <br />
+        <a href="~/DeliveryHistory?id=@Request.Cookies["userid"]" >
+            <button class="btn btn-primary form-control">View History</button>
+        </a>
+
+      
+    </div>
+</body>
+}else{
+     <script>
+     alert("Sorry, you are not eligible to enter this page.");
+     location.href = '/Index';
+     </script>
+}

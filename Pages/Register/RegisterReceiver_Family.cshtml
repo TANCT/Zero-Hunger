@@ -1,0 +1,178 @@
+﻿@page
+@using ZeroHunger.Model
+@model ZeroHunger.Pages.Register.RegisterReceiver_FamilyModel
+@{
+    <head>
+<content charset="utf-8">
+	<title>Form-v10 by Colorlib</title>
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+	<link rel="stylesheet" type="text/css" href="../css/montserrat-font.css">
+	<link rel="stylesheet" type="text/css" href="../fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+	<!-- Main Style Css -->
+    <link rel="stylesheet" href="../css/style2.css"/>
+	<script language="javascript">
+		function validateIC(ic)
+		{
+			if(new Date((ic.substring(0,2)+"-"+ic.substring(2,4)+"-"+ic.substring(4,6)+" 08:00"))=="Invalid Date")
+			{
+				alert("Please re-check your IC Number");
+				return;
+			}
+			var dob=new Date();
+			const today=new Date();
+			if(parseInt( ic.substring(0,2))>(today.getYear()%1000%100))
+			{
+				dob.setYear(ic.substring(0,2));
+			}
+			else 
+			{
+				dob.setYear("20"+ic.substring(0,2));
+			}
+			dob.setMonth((parseInt(ic.substring(2,4))-1));
+			dob.setDate(ic.substring(4,6));
+			dob.setHours(8);
+
+			document.getElementsByName("familyDOB")[0].value=dob.toISOString().substr(0, 10);
+		}
+		function submit()
+		{
+			alert("The application is submitted. An email will be sent to you when the application is approved.")
+
+			
+		}
+		function validation()
+        {
+            var relationship=document.getElementById("relationship").value;
+            if(!relationship.match(/[A-zÀ-ž\s]/g) )
+            {
+                document.getElementById("validatesummary").innerHTML += "<li>Please re-check the Relationship. It should not contain any symbols.</li>";
+            }
+
+            var name=document.getElementById("name").value;
+            if(!name.match(/[A-zÀ-ž\s]/g) )
+            {
+                document.getElementById("validatesummary").innerHTML += "<li>Please re-check the Relationship. It should not contain any symbols.</li>";
+            }
+
+            var ic=document.getElementsByName("ic")[0].value;
+            if(!ic.match(/\d{12}/g) )
+            {
+                document.getElementById("validatesummary").innerHTML += "<li>Please re-check the IC No. (eg. 000102030405)</li>";
+            }
+        }
+	</script>
+</head>
+<body class="form-v10">
+
+	<div class="page-content" style="display:block; padding:20px 0 20px 0;width:100%;">
+		<div style="width:100%; text-align: center;"><h1>Applying Receiver Account</h1></div>
+		
+		<div class="form-v10-content" style="width:95%;margin:20px auto 20px auto;" >
+		<ul style="color:red;">
+				<div id="validatesummary"></div>
+				@if(Model.message!="")
+				{
+					
+						<li>@Model.message</li>
+					
+				}
+			</ul>
+			<form class="form-detail" method="post" id="myform" class="page-content" style="display:block; padding:50px;" >
+				
+					<h2 style="width:100%; text-align: center;">Family Info</h2>
+					<input type="text" asp-for="applicationFamily.receiverIC" name="receiverFamily" value=Model.application.receiverIC hidden>
+					<table class="form-group" style="text-align:center;">
+					<tr style="border:double 2.5px black; border-bottom:solid 1px black;">
+						<th style="border:solid 1px black;">Relationship</th>
+						<th style="border:solid 1px black;">Name</th>
+						<th style="border:solid 1px black;">IC no.</th>
+						<th style="border:solid 1px black;">DOB</th>
+					</tr>
+					<tr style="border:double 2.5px black; border-top:solid 1px black;">
+						<th style="border:solid 1px black;">Occupation</th>
+						<th style="border:solid 1px black;">Salary (RM)</th>
+						<th style="border:solid 1px black;">Company or School</th>
+						<th style="border:solid 1px black;"></th>
+					</tr>
+					@if(Model.noFamily>0)
+					{
+						@foreach(ReceiverFamily familyInfo in Model.applicationFamilies)
+						{
+							<tr style="border:double 2.5px black; border-bottom:solid 1px black;">
+								<td style="color:black;border:solid 1px black;">@Html.DisplayFor(ReceiverFamily => familyInfo.relationship)</td>
+								<td style="color:black;border:solid 1px black;">@Html.DisplayFor(ReceiverFamily => familyInfo.familyName)</td>
+								<td style="color:black;border:solid 1px black;">@Html.DisplayFor(ReceiverFamily => familyInfo.familyIC)</td>
+								<td style="color:black;border:solid 1px black;">@Html.DisplayFor(ReceiverFamily => familyInfo.familyDOB)</td>
+							</tr>
+							<tr style="border:double 2.5px black; border-top:solid 1px black;">
+								<td style="color:black;border:solid 1px black;">@Html.DisplayFor(ReceiverFamily => familyInfo.familyOccupation)</td>
+								<td style="color:black;border:solid 1px black;">@Html.DisplayFor(SalaryGroup => Model.salaryGroups.ElementAt(familyInfo.familySalaryGroupID).salaryRange)</td>
+								<td style="color:black;border:solid 1px black;">@Html.DisplayFor(ReceiverFamily => familyInfo.familyCompanyOrSchool)</td>
+							</tr>
+						}
+					}
+							<tr style="border:double 2.5px black; border-bottom:solid 1px black;">
+								<td style="border:solid 1px black;">
+									<input asp-for="applicationFamily.relationship" type="text" name="relationship" class="relationship" id="relationship" placeholder="Relationship" pattern="([A-zÀ-ž\s]){1,}" required>
+								</td>
+								<td style="border:solid 1px black;">
+									<input asp-for="applicationFamily.familyName" type="text" name="familyName" class="name" id="name" placeholder="Name" pattern="([A-zÀ-ž\s]){1,}" required>
+								</td>
+								<td style="border:solid 1px black;">
+									<input asp-for="applicationFamily.familyIC" type="text" name="familyIC" class="icNum" id="ic" placeholder="IC No. (no '-')" onblur="validateIC(this.value)" pattern="\d{12}" required>
+								</td>
+								<td style="border:solid 1px black;">
+									<input asp-for="applicationFamily.familyDOB" type="date" name="familyDOB" class="DOB" id="DOB" required>
+								</td>
+							
+							</tr>
+							<tr style="border:double 2.5px black; border-top:solid 1px black;">
+					
+					   
+							<td style="border:solid 1px black;">
+								<input type="text" asp-for="applicationFamily.familyOccupation" name="familyOccupation" class="occupation" id="occupation" placeholder="Occupation" required>
+							</td>
+							<td style="border:solid 1px black;">
+								<select asp-for="applicationFamily.familySalaryGroupID" name="familySalaryGroupID">
+									<option value="Salary" disabled selected>Salary (RM)</option>
+									@foreach(SalaryGroup salaryGroup in @Model.salaryGroups)
+									{
+										<option value=@Html.DisplayFor(SalaryGroup => salaryGroup.salaryGroupID)>@Html.DisplayFor(SalaryGroup => salaryGroup.salaryRange)</option>
+									}
+									<!--<option value="0">0</option>
+									<option value="1-500">1-500</option>
+									<option value="501-1000">501-1000</option>
+									<option value="1001-1500">1001-1500</option>
+									<option value="1501-2000">1501-2000</option>
+									<option value=">2000">>2000</option>-->
+								</select>
+								<span class="select-btn">
+							  		<i class="zmdi zmdi-chevron-down"></i>
+								</span>
+							</td>
+							<td style="border:solid 1px black;">
+								<input type="text" asp-for="applicationFamily.familyCompanyOrSchool" name="familyCompanyOrSchool" class="company" id="company" placeholder="Company/School" >
+							</td>
+							<td style="border:solid 1px black;">
+								<div class="form-row-last text-center">
+									<input type="submit" onclick="validation()"  name="register" class="btn btn-info" value="Save" style="cursor:pointer; width:80px; background:#ff8f8f;">
+								</div>
+							</td>
+							</tr>
+					</table>
+	
+			</form>
+			
+
+			<div class="col-12 m-3 p-3 text-center">
+				<a href="/ReceiverQuestionnaire?id=@Model.application.receiverIC" class='btn btn-success text-white' style='cursor:pointer; width:10%;' onclick="submit()">
+					Done
+				</a>
+			</div>
+		</div>
+	</div>
+
+</body>
+}
